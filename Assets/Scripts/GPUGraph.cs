@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GPUGraph : MonoBehaviour
 {
-
+	int func_index;
 	[SerializeField]
 	Transform pointPrefab;
 
@@ -30,12 +30,17 @@ public class GPUGraph : MonoBehaviour
 	void Update()
 	{
 		float time = Time.time;
+		FunctionLibrary.Function function = FunctionLibrary.GetFunction(func_index);
 		for (int i = 0; i < points.Length; i++)
 		{
 			Transform point = points[i];
 			Vector3 position = point.localPosition;
-			position.y = FunctionLibrary.MultiWave(position.x, time);
+			position.y = function(position.x, time);
 			point.localPosition = position;
 		}
 	}
+	public void SetFunc(float value)
+    {
+		func_index = (int)value;
+    }
 }
